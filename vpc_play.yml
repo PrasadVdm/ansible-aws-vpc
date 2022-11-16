@@ -1,0 +1,20 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: Include vpc variables
+      include_vars:
+        file: ./vars/vpc_vars
+
+    - name: Create Vprofile VPC
+      ec2_vpc_net:
+        name: "{{vpc_name}}"
+        cidr_block: "{{vpc_Cidr}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        dns_support: yes
+        tags:
+          project: Vprofile
+          author: VDM
+        tenancy: dedicated
+      register: vpcout
