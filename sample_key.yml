@@ -9,3 +9,7 @@
       register: keyout
     - debug:
         var: keyout
+    - name: Saving the pub key to a file
+      copy:
+        content: "{{keyout.key.private_key}}"
+        dest: ./sample_key.pem
