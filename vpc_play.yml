@@ -57,3 +57,42 @@
         wait_timeout: 300
         tags:
           Name: pubsub3
+
+    - name: Create Private Subnet 1
+      ec2_vpc_subnet:
+        cidr: "{{PrivSub1Cidr}}"
+        region: "{{region}}"
+        az: "{{zone1}}"
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        map_public: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
+          Name: privsub1
+
+    - name: Create Private Subnet 2
+      ec2_vpc_subnet:
+        cidr: "{{PrivSub2Cidr}}"
+        region: "{{region}}"
+        az: "{{zone2}}"
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        map_public: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
+          Name: privsub2
+
+    - name: Create Private Subnet 3
+      ec2_vpc_subnet:
+        cidr: "{{PrivSub3Cidr}}"
+        region: "{{region}}"
+        az: "{{zone3}}"
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        map_public: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
+          Name: privsub3
