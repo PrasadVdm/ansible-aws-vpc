@@ -5,3 +5,4 @@
     - name: Creating a sample keypair
       ec2_key:
         name: sample_keypair
+        region: us-east-2
