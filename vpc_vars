@@ -1,0 +1,24 @@
+# This file is for VPC variables
+vpc_name: "Vprofile-vpc"
+region: "us-east-2"
+
+#VPC RANGE
+
+vpc_Cidr: 172.60.0.0/16
+
+#SUBNET RANGE
+
+PubSub1Cidr: 172.60.1.0/24
+PubSub2Cidr: 172.60.2.0/24
+PubSub3Cidr: 172.60.3.0/24
+PrivSub1Cidr: 172.60.4.0/24
+PrivSub2Cidr: 172.60.5.0/24
+PrivSub3Cidr: 172.60.6.0/24
+
+# ZONE NAMES
+
+zone1: us-east-2a
+zone2: us-east-2b
+zone3: us-east-2c
+
+state: present
