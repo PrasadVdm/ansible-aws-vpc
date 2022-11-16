@@ -111,4 +111,10 @@
         tags:
           Name: Vprofile-IGW
       register: igwout
+    - debug:
+        var: igwout
+    - debug:
+        var: privsub3_out
+
+
 
