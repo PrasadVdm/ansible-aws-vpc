@@ -111,10 +111,22 @@
         tags:
           Name: Vprofile-IGW
       register: igwout
-    - debug:
-        var: igwout
-    - debug:
-        var: privsub3_out
+
+    - name: Create IGW_RT
+      ec2_vpc_route_table:
+        region: "{{region}}"
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        subnets:
+          - "{{ pubsub1_out.subnet.id }}"
+          - "{{ pubsub2_out.subnet.id }}"
+          - "{{ pubsub3_out.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ igwout.gateway_id }}"
+        tags:
+          Name: IGW_RT
+
 
 
 
