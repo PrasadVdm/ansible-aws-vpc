@@ -13,10 +13,11 @@
         region: "{{region}}"
         state: "{{state}}"
         dns_support: yes
+        dns_hostname: yes
         tags:
           project: Vprofile
           author: VDM
-        tenancy: dedicated
+        tenancy: default
       register: vpcout
 
     - name: Create Public Subnet 1
@@ -112,7 +113,7 @@
           Name: Vprofile-IGW
       register: igwout
 
-    - name: Create IGW_RT
+    - name: Create Pubic Subnet Route Table
       ec2_vpc_route_table:
         region: "{{region}}"
         state: "{{state}}"
@@ -125,8 +126,8 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{ igwout.gateway_id }}"
         tags:
-          Name: IGW_RT
-
+          Name: Public_RT
+      register: pubRT_out
 
 
 
