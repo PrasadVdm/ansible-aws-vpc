@@ -30,4 +30,4 @@
         wait: yes
         wait_timeout: 300
         tags:
-          name: pubsub1
+          Name: pubsub1
