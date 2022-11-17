@@ -129,6 +129,31 @@
           Name: Public_RT
       register: pubRT_out
 
+    - name: Create NAT Gateway
+      ec2_vpc_nat_gateway:
+        region: "{{region}}"
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        if_exist_do_not_create: yes
+        subnet_id: "{{pubsub1_out.subnet.id}}"
+        wait: yes
+      register: natGW_out
+
+    - name: Create Private Subnet Route Table
+      ec2_vpc_route_table:
+        region: "{{region}}"
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        subnets:
+          - "{{ privsub1_out.subnet.id }}"
+          - "{{ privsub2_out.subnet.id }}"
+          - "{{ privsub3_out.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ natGW_out.nat_gateway_id }}"
+        tags:
+          Name: Private_RT
+      register: privRT_out
 
 
 
