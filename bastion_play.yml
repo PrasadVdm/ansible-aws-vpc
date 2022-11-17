@@ -1,0 +1,59 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: including VPC variable file
+      include_vars:
+        file: ./vars/vpc_vars
+    - name: including BASTION variable file
+      include_vars:
+        file: ./vars/bastion_vars
+    - name: Create a key pair
+      ec2_key:
+        name: bastion_key
+        region: "{{region}}"
+      register: keyout
+
+    - name: Saving the public key to a file
+      copy:
+        content: "{{keyout.key.private_key}}"
+        dest: ./bastion_key.pem
+        mode: 0600
+      when: keyout.changed
+
+    - name: Create a Security Group for bastion host
+      ec2_group:
+        name: bastion_SG
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{MYIP}}"
+      register: Bastion_sg_out
+
+    - name: Creating VM for bastion server
+      ec2:
+        instance_type: t2.micro
+        key_name: bastion_key
+        image: "{{bastion_ami}}"
+        group_id: "{{Bastion_sg_out.group_id}}"
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        vpc_subnet_id: "{{pubsub1_out.subnet.id}}"
+        zone: "{{zone1}}"
+        instance_tags:
+          Name: Bastion_Server
+          Project: Vprofile
+        count_tag:
+          Name: Bastion_Server
+          Project: Vprofile
+        exact_count: 1
+        wait: yes
+        wait_timeout: 300
+      register: instance_out
+
+
+
+
