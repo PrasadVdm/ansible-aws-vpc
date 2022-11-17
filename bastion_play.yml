@@ -44,7 +44,6 @@
         image: "{{bastion_ami}}"
         group_id: "{{Bastion_sg_out.group_id}}"
         region: "{{region}}"
-        vpc_id: "{{vpcid}}"
         vpc_subnet_id: "{{pubsub1_out.subnet.id}}"
         zone: "{{zone1}}"
         instance_tags:
