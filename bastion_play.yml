@@ -8,6 +8,9 @@
     - name: including BASTION variable file
       include_vars:
         file: ./vars/bastion_vars
+    - name: including output variable file
+      include_vars:
+        file: ./vars/output_vars
     - name: Create a key pair
       ec2_key:
         name: bastion_key
